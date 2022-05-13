@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>269925641350-097sbv4u5qoe1sdg08brqiu4ov0cnkkc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.269925641350-097sbv4u5qoe1sdg08brqiu4ov0cnkkc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAL1ygf8Z1HrtJQsG__jDnY0UpV47PF5aM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>269925641350</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ytchao.kittyPainter</string>
+	<key>PROJECT_ID</key>
+	<string>kitty-painter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kitty-painter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:269925641350:ios:ad15b27032fc0063483507</string>
+</dict>
+</plist>
