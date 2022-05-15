@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct UserMenuBar: View {
-    @EnvironmentObject var auth: AuthViewModel
+    @EnvironmentObject var auth: UserViewModel
     @Binding var mainView: MainView.CONNENT
-    let tempUser: User
+    let userDetail: UserDetail
 
     var body: some View {
         HStack {
@@ -27,7 +27,8 @@ struct UserMenuBar: View {
             switch(mainView) {
             case .UserSetting:
                 Button("Save") {
-                    auth.user = tempUser
+                    auth.user.detail = userDetail
+                    auth.updateUserDetail()
                 }
                 .modifier(ButtonViewModifier(background: .green, toStroke: true))
                 .transition(.offset(x: 50).combined(with: .opacity))
@@ -39,7 +40,7 @@ struct UserMenuBar: View {
                 auth.logOut()
             }
             .modifier(ButtonViewModifier(background: .blue, toStroke: false))
-            HeadshotView(user: auth.user)
+            HeadshotView(userDetail: auth.user.detail, size: 50)
                 .onTapGesture {
                     mainView = .UserSetting
                 }
@@ -52,6 +53,6 @@ struct UserMenuBar: View {
 
 struct UserMenuBar_Previews: PreviewProvider {
     static var previews: some View {
-        UserMenuBar(mainView: .constant(.Home), tempUser: User())
+        UserMenuBar(mainView: .constant(.Home), userDetail: UserDetail())
     }
 }

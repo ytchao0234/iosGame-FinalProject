@@ -8,26 +8,41 @@
 import SwiftUI
 
 struct HeadshotView: View {
-    let user: User
+    let userDetail: UserDetail
+    let size: CGFloat
+    
+    var eyesOffset: CGSize {
+        let width = userDetail.headshot.eyesOffset.width * size / 50
+        let height = userDetail.headshot.eyesOffset.height * size / 50
+        
+        return CGSize(width: width, height: height)
+    }
 
     var body: some View {
-        ZStack {
-            Group {
-                Image(user.headshot.baseString)
-                    .resizable()
-                Image(user.headshot.eyesString)
-                    .resizable()
-            }
-            .scaledToFit()
+        if userDetail.uid != "" {
+            Image(userDetail.headshot.baseString)
+                .resizable()
+                .scaledToFit()
+                .overlay {
+                    Image(userDetail.headshot.eyesString)
+                        .resizable()
+                        .scaledToFit()
+                        .offset(eyesOffset)
+                }
+                .scaleEffect(0.8)
+                .background(userDetail.headshot.backgroundColor)
+                .clipShape(Circle())
+        } else {
+            ProgressView()
+                .frame(width: size, height: size)
+                .background(Color.secondary)
+                .clipShape(Circle())
         }
-        .scaleEffect(0.8)
-        .background(user.headshot.backgroundColor)
-        .clipShape(Circle())
     }
 }
 
 struct HeadshotView_Previews: PreviewProvider {
     static var previews: some View {
-        HeadshotView(user: User())
+        HeadshotView(userDetail: UserDetail(), size: 200)
     }
 }

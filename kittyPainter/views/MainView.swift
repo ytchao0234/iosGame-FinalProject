@@ -6,22 +6,24 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct MainView: View {
-    @EnvironmentObject var auth: AuthViewModel
+    @EnvironmentObject var auth: UserViewModel
     @State var content: MainView.CONNENT = .UserSetting
-    @State var tempUser: User = User()
+    @State var tempUserDetail: UserDetail = UserDetail()
 
     var body: some View {
         VStack {
-            UserMenuBar(mainView: $content, tempUser: tempUser)
+            UserMenuBar(mainView: $content, userDetail: tempUserDetail)
             Spacer()
 
             switch(content) {
             case .Home:
                 Text("Home")
             case .UserSetting:
-                UserSettingView(user: $tempUser)
+                UserSettingView(userDetail: $tempUserDetail)
             }
             Spacer()
         }

@@ -22,7 +22,7 @@
 		03FBC73F282D1D4600F7FB22 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 03FBC73E282D1D4600F7FB22 /* FirebaseFirestoreSwift */; };
 		03FBC741282D1F7D00F7FB22 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC740282D1F7D00F7FB22 /* AuthView.swift */; };
 		03FBC746282D1FDD00F7FB22 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC745282D1FDD00F7FB22 /* User.swift */; };
-		03FBC748282D58B000F7FB22 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC747282D58B000F7FB22 /* AuthViewModel.swift */; };
+		03FBC748282D58B000F7FB22 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC747282D58B000F7FB22 /* UserViewModel.swift */; };
 		03FBC74A282D5B4F00F7FB22 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC749282D5B4F00F7FB22 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,7 @@
 		03FBC737282D1C4900F7FB22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		03FBC740282D1F7D00F7FB22 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		03FBC745282D1FDD00F7FB22 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		03FBC747282D58B000F7FB22 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		03FBC747282D58B000F7FB22 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		03FBC749282D5B4F00F7FB22 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,7 +130,7 @@
 		03FBC744282D1F9500F7FB22 /* view-models */ = {
 			isa = PBXGroup;
 			children = (
-				03FBC747282D58B000F7FB22 /* AuthViewModel.swift */,
+				03FBC747282D58B000F7FB22 /* UserViewModel.swift */,
 			);
 			path = "view-models";
 			sourceTree = "<group>";
@@ -216,7 +216,7 @@
 			files = (
 				03607FEF282EA1350074F390 /* HeadshotSettingView.swift in Sources */,
 				03607FE6282E57C60074F390 /* Headshot.swift in Sources */,
-				03FBC748282D58B000F7FB22 /* AuthViewModel.swift in Sources */,
+				03FBC748282D58B000F7FB22 /* UserViewModel.swift in Sources */,
 				03FBC74A282D5B4F00F7FB22 /* MainView.swift in Sources */,
 				03FBC741282D1F7D00F7FB22 /* AuthView.swift in Sources */,
 				03FBC72C282D1BED00F7FB22 /* ContentView.swift in Sources */,

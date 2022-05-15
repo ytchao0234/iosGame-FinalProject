@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuthView: View {
-    @EnvironmentObject var auth: AuthViewModel
+    @EnvironmentObject var auth: UserViewModel
 
     var body: some View {
         ZStack {
@@ -25,7 +25,7 @@ struct AuthView: View {
 }
 
 struct UserLogInView: View {
-    @EnvironmentObject var auth: AuthViewModel
+    @EnvironmentObject var auth: UserViewModel
     @State private var showPassword: Bool = false
 
     var body: some View {

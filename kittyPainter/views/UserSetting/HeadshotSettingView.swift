@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeadshotSettingView: View {
-    @Binding var user: User
+    @Binding var headshot: Headshot
     @State private var selection: Int = 0
 
     var body: some View {
@@ -20,9 +20,9 @@ struct HeadshotSettingView: View {
             }
             .pickerStyle(.segmented)
             TabView(selection: $selection) {
-                SelectView(list: Headshot.shapeList, idx: $user.headshot.shape).tag(0)
-                SelectView(list: Headshot.patternList, idx: $user.headshot.pattern).tag(1)
-                SelectView(list: Headshot.eyesList, idx: $user.headshot.eyes,
+                SelectView(headshot: $headshot, selection: $headshot.shape, type: "shape", list: Headshot.getShapeList(headshot.shape)).tag(0)
+                SelectView(headshot: $headshot, selection: $headshot.pattern, type: "pattern", list: Headshot.getPatternList(headshot.shape)).tag(1)
+                SelectView(headshot: $headshot, selection: $headshot.eyes, type: "eyes", list: Headshot.getEyesList(headshot.shape),
                            clippedAlignment: .leading, clippedOffset: CGSize(width: 0, height: 15)).tag(2)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -32,19 +32,23 @@ struct HeadshotSettingView: View {
 
 struct HeadshotSettingView_Previews: PreviewProvider {
     static var previews: some View {
-        HeadshotSettingView(user: .constant(User()))
+        HeadshotSettingView(headshot: .constant(Headshot()))
     }
 }
 
 struct SelectView: View {
-    let list: Array<String>
-    @Binding var idx: Int
+    @Binding var headshot: Headshot
+    @Binding var selection: Int
+    let type: String
+    let list: Array<Int>
     let clippedAlignment: Alignment?
     let clippedOffset: CGSize
     
-    init(list: Array<String>, idx: Binding<Int>, clippedAlignment: Alignment? = nil, clippedOffset: CGSize = .zero) {
+    init(headshot: Binding<Headshot>, selection: Binding<Int>, type: String, list: Array<Int>, clippedAlignment: Alignment? = nil, clippedOffset: CGSize = .zero) {
+        self._headshot = Binding(projectedValue: headshot)
+        self._selection = Binding(projectedValue: selection)
+        self.type = type
         self.list = list
-        self._idx = Binding(projectedValue: idx)
         self.clippedAlignment = clippedAlignment
         self.clippedOffset = clippedOffset
     }
@@ -62,18 +66,18 @@ struct SelectView: View {
 
         LazyVGrid(columns: columns) {
             ForEach(Array(list.indices), id: \.self) { idx in
-                let imageSize = getImageSize(list[idx])
+                let imageSize = getImageSize(type + "\(list[idx])")
 
                 Group {
                     if let alignment = clippedAlignment {
-                        Image(list[idx])
+                        Image(type + "\(list[idx])")
                             .frame(width: imageSize.width / 2, height: imageSize.height / 2, alignment: alignment)
                             .offset(clippedOffset)
                             .clipped()
                             .frame(width: 80, height: 80 * imageSize.height / imageSize.width)
                     }
                     else {
-                        Image(list[idx])
+                        Image(type + "\(list[idx])")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 80)
@@ -81,14 +85,17 @@ struct SelectView: View {
                 }
                 .background(Color.secondary)
                 .overlay {
-                    if idx == self.idx {
+                    if list[idx] == self.selection {
                         Rectangle()
                             .stroke(.yellow, lineWidth: 2)
                             .blur(radius: 2.5)
                     }
                 }
                 .onTapGesture {
-                    self.idx = idx
+                    if type == "shape" {
+                        headshot.pattern = 0
+                    }
+                    self.selection = list[idx]
                 }
             }
         }
