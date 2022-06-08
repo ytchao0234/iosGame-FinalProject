@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 
 class UserViewModel: ObservableObject {
     @Published var user: User = User()
+    @Published var isLoading: Bool = false
     @Published var isLoggedIn: Bool = false
     @Published var toAlert: Bool = false
     @Published var errorMessage: String = ""
@@ -21,6 +22,15 @@ class UserViewModel: ObservableObject {
     }
 
     func register() {
+        self.isLoading = true
+
+        if self.user.password != self.user.confirmPwd {
+            self.toAlert = true
+            self.errorMessage = "[ERROR]: Register : Password are not matching."
+            self.isLoading = false
+            return
+        }
+
         Auth.auth().createUser(withEmail: user.email, password: user.password) { result, error in
                     
             guard let user = result?.user,
@@ -30,13 +40,15 @@ class UserViewModel: ObservableObject {
                 return
             }
             self.user.uid = user.uid
+            self.user.detail = UserDetail(uid: user.uid)
             self.updateUserDetail()
             self.logIn()
         }
     }
 
     func logIn() {
-        print("logIn")
+        self.isLoading = true
+
         Auth.auth().signIn(withEmail: user.email, password: user.password) { result, error in
             guard let user = result?.user,
                 error == nil else {
@@ -48,11 +60,11 @@ class UserViewModel: ObservableObject {
             self.user.uid = user.uid
             print(user.email ?? "user email", user.uid)
             self.readUserDetail()
+            self.isLoading = false
         }
     }
     
     func logOut() {
-        print("logOut")
         do {
             try Auth.auth().signOut()
             self.isLoggedIn = false
@@ -64,7 +76,6 @@ class UserViewModel: ObservableObject {
     
     func checkIsLoggedIn() {
         if let user = Auth.auth().currentUser {
-            print(user.uid)
             self.user.uid = user.uid
             self.user.email = user.email ?? ""
             self.isLoggedIn = true
@@ -79,7 +90,6 @@ class UserViewModel: ObservableObject {
         do {
             self.user.detail.uid = self.user.uid
             try db.collection("UserDetail").document(self.user.uid).setData(from: self.user.detail)
-            print("update:", self.user.uid, self.user.detail)
         } catch {
             print(error)
         }
@@ -91,11 +101,10 @@ class UserViewModel: ObservableObject {
         db.collection("UserDetail").document(self.user.uid).getDocument { document, error in
             guard let document = document,
                   document.exists,
-                  let headshot = try? document.data(as: UserDetail.self) else {
+                  let userDetail = try? document.data(as: UserDetail.self) else {
                 return
             }
-            self.user.detail = headshot
-            print("read:", self.user.uid, self.user.detail.headshot)
+            self.user.detail = userDetail
         }
     }
 }

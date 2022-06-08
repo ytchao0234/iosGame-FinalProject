@@ -10,38 +10,41 @@ import SwiftUI
 struct UserSettingView: View {
     @EnvironmentObject var auth: UserViewModel
     @Binding var userDetail: UserDetail
-    @State var color: Color = .clear
 
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                HeadshotView(userDetail: userDetail, size: 200)
-                    .frame(width: 200, height: 200)
-
-                ColorPicker(selection: $color) {
-                    TextField(text: $userDetail.name, prompt: Text(userDetail.name)) {}
-                        .modifier(TextFieldViewModifier(image: "person.circle.fill"))
-                }
-                .frame(width: 200)
-                .onChange(of: color) { value in
-                    if let rgba = UIColor(color).cgColor.components {
-                        userDetail.headshot.backgroundRed = rgba[0]
-                        userDetail.headshot.backgroundGreen = rgba[1]
-                        userDetail.headshot.backgroundBlue = rgba[2]
+                ZStack(alignment: .bottomTrailing) {
+                    HeadshotView(userDetail: userDetail, size: 200)
+                    
+                    Button {
+                        userDetail.headshot = Headshot.random()
+                    } label: {
+                        Image(systemName: "dice.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(5)
+                            .frame(width: 40)
                     }
+                    .modifier(ButtonViewModifier(shape: Circle(), background: .blue, toStroke: false))
                 }
-
-                HeadshotSettingView(headshot: $userDetail.headshot)
-                    .padding()
+                .frame(width: 200, height: 200)
+                
+                List {
+                    Group {
+                        TextField(text: $userDetail.name, prompt: Text(userDetail.name)) {}
+                            .modifier(TextFieldViewModifier(image: "person.circle.fill"))
+                        HeadshotSettingView(headshot: $userDetail.headshot)
+                    }
+                    .padding(.vertical, 5)
+                }
             }
         }
         .onAppear {
             self.userDetail = auth.user.detail
-            self.color = userDetail.headshot.backgroundColor
         }
         .onChange(of: auth.user.detail.uid) { newValue in
             self.userDetail = auth.user.detail
-            self.color = userDetail.headshot.backgroundColor
         }
     }
 }

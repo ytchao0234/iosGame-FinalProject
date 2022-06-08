@@ -12,20 +12,42 @@ struct HeadshotSettingView: View {
     @State private var selection: Int = 0
 
     var body: some View {
-        VStack {
-            Picker("headshot picker", selection: $selection) {
-                Text("Shape").tag(0)
-                Text("Pattern").tag(1)
-                Text("Eyes").tag(2)
+        Group {
+            ColorPicker(selection: $headshot.backgroundColor) {
+                Text("Background Color")
             }
-            .pickerStyle(.segmented)
-            TabView(selection: $selection) {
-                SelectView(headshot: $headshot, selection: $headshot.shape, type: "shape", list: Headshot.getShapeList(headshot.shape)).tag(0)
-                SelectView(headshot: $headshot, selection: $headshot.pattern, type: "pattern", list: Headshot.getPatternList(headshot.shape)).tag(1)
-                SelectView(headshot: $headshot, selection: $headshot.eyes, type: "eyes", list: Headshot.getEyesList(headshot.shape),
-                           clippedAlignment: .leading, clippedOffset: CGSize(width: 0, height: 15)).tag(2)
+            
+            Slider(value: $headshot.extraEyesOffset.width, in: -3...3, step: 0.1) {
+                Text("Eyes Offset X")
+            } minimumValueLabel: {
+                Text("Eyes Offset X")
+            } maximumValueLabel: {
+                Text("")
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
+            Slider(value: $headshot.extraEyesOffset.height, in: -3...3, step: 0.1) {
+                Text("Eyes Offset Y")
+            } minimumValueLabel: {
+                Text("Eyes Offset Y")
+            } maximumValueLabel: {
+                Text("")
+            }
+
+            VStack {
+                Picker("headshot picker", selection: $selection) {
+                    Text("Shape").tag(0)
+                    Text("Pattern").tag(1)
+                    Text("Eyes").tag(2)
+                }
+                .pickerStyle(.segmented)
+                TabView(selection: $selection) {
+                    SelectView(headshot: $headshot, selection: $headshot.shape, type: "shape", list: Headshot.getShapeList(headshot.shape)).tag(0)
+                    SelectView(headshot: $headshot, selection: $headshot.pattern, type: "pattern", list: Headshot.getPatternList(headshot.shape)).tag(1)
+                    SelectView(headshot: $headshot, selection: $headshot.eyes, type: "eyes", list: Headshot.getEyesList(headshot.shape),
+                               clippedAlignment: .leading, clippedOffset: CGSize(width: 0, height: 15)).tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: 350)
+            }
         }
     }
 }
@@ -62,7 +84,7 @@ struct SelectView: View {
     }
 
     var body: some View {
-        let columns = [GridItem(.adaptive(minimum: 80, maximum: 80))]
+        let columns = [GridItem(.adaptive(minimum: 90, maximum: 90))]
 
         LazyVGrid(columns: columns) {
             ForEach(Array(list.indices), id: \.self) { idx in
@@ -74,13 +96,13 @@ struct SelectView: View {
                             .frame(width: imageSize.width / 2, height: imageSize.height / 2, alignment: alignment)
                             .offset(clippedOffset)
                             .clipped()
-                            .frame(width: 80, height: 80 * imageSize.height / imageSize.width)
+                            .frame(width: 90, height: 90 * imageSize.height / imageSize.width)
                     }
                     else {
                         Image(type + "\(list[idx])")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 80)
+                            .frame(width: 90)
                     }
                 }
                 .background(Color.secondary)

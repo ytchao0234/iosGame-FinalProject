@@ -28,9 +28,17 @@ struct UserMenuBar: View {
             case .UserSetting:
                 Button("Save") {
                     auth.user.detail = userDetail
-                    auth.updateUserDetail()
+                    auth.user.detail.headshot.uploadPhoto(uid: auth.user.uid) { result in
+                        switch(result) {
+                        case .success(let url):
+                            auth.user.detail.photoURL = url
+                        case .failure(let error):
+                            print(error)
+                        }
+                        auth.updateUserDetail()
+                    }
                 }
-                .modifier(ButtonViewModifier(background: .green, toStroke: true))
+                .modifier(ButtonViewModifier(shape: RoundedRectangle(cornerRadius: 5), background: .green, toStroke: true))
                 .transition(.offset(x: 50).combined(with: .opacity))
             default:
                 EmptyView()
@@ -39,7 +47,7 @@ struct UserMenuBar: View {
             Button("Log Out") {
                 auth.logOut()
             }
-            .modifier(ButtonViewModifier(background: .blue, toStroke: false))
+            .modifier(ButtonViewModifier(shape: RoundedRectangle(cornerRadius: 5), background: .blue, toStroke: false))
             HeadshotView(userDetail: auth.user.detail, size: 50)
                 .onTapGesture {
                     mainView = .UserSetting

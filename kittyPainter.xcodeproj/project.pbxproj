@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032ED3482850D523007A6AFC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 032ED3472850D523007A6AFC /* FirebaseStorage */; };
 		03607FE6282E57C60074F390 /* Headshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03607FE5282E57C60074F390 /* Headshot.swift */; };
 		03607FE8282E57F90074F390 /* UserMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03607FE7282E57F90074F390 /* UserMenuBar.swift */; };
 		03607FEA282E77200074F390 /* UserSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03607FE9282E77200074F390 /* UserSettingView.swift */; };
 		03607FED282EA1240074F390 /* HeadshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03607FEC282EA1240074F390 /* HeadshotView.swift */; };
 		03607FEF282EA1350074F390 /* HeadshotSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03607FEE282EA1350074F390 /* HeadshotSettingView.swift */; };
+		03D0A031284F512E006CBE7D /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D0A030284F512D006CBE7D /* View+Extension.swift */; };
 		03FBC72A282D1BED00F7FB22 /* kittyPainterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC729282D1BED00F7FB22 /* kittyPainterApp.swift */; };
 		03FBC72C282D1BED00F7FB22 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FBC72B282D1BED00F7FB22 /* ContentView.swift */; };
 		03FBC72E282D1BF200F7FB22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03FBC72D282D1BF200F7FB22 /* Assets.xcassets */; };
@@ -32,6 +34,7 @@
 		03607FE9282E77200074F390 /* UserSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingView.swift; sourceTree = "<group>"; };
 		03607FEC282EA1240074F390 /* HeadshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadshotView.swift; sourceTree = "<group>"; };
 		03607FEE282EA1350074F390 /* HeadshotSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadshotSettingView.swift; sourceTree = "<group>"; };
+		03D0A030284F512D006CBE7D /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		03FBC726282D1BED00F7FB22 /* Kitty Painter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kitty Painter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FBC729282D1BED00F7FB22 /* kittyPainterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kittyPainterApp.swift; sourceTree = "<group>"; };
 		03FBC72B282D1BED00F7FB22 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,6 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03FBC73B282D1D4600F7FB22 /* FirebaseAuth in Frameworks */,
+				032ED3482850D523007A6AFC /* FirebaseStorage in Frameworks */,
 				03FBC73D282D1D4600F7FB22 /* FirebaseFirestore in Frameworks */,
 				03FBC73F282D1D4600F7FB22 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -58,11 +62,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		032ED3462850D523007A6AFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		03607FEB282EA1030074F390 /* UserSetting */ = {
 			isa = PBXGroup;
 			children = (
 				03607FE9282E77200074F390 /* UserSettingView.swift */,
-				03607FEC282EA1240074F390 /* HeadshotView.swift */,
 				03607FEE282EA1350074F390 /* HeadshotSettingView.swift */,
 			);
 			path = UserSetting;
@@ -73,6 +83,7 @@
 			children = (
 				03FBC728282D1BED00F7FB22 /* kittyPainter */,
 				03FBC727282D1BED00F7FB22 /* Products */,
+				032ED3462850D523007A6AFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				03FBC729282D1BED00F7FB22 /* kittyPainterApp.swift */,
+				03D0A030284F512D006CBE7D /* View+Extension.swift */,
 				03FBC742282D1F8400F7FB22 /* views */,
 				03FBC743282D1F8D00F7FB22 /* models */,
 				03FBC744282D1F9500F7FB22 /* view-models */,
@@ -111,6 +123,7 @@
 			children = (
 				03FBC72B282D1BED00F7FB22 /* ContentView.swift */,
 				03FBC740282D1F7D00F7FB22 /* AuthView.swift */,
+				03607FEC282EA1240074F390 /* HeadshotView.swift */,
 				03607FE7282E57F90074F390 /* UserMenuBar.swift */,
 				03FBC749282D5B4F00F7FB22 /* MainView.swift */,
 				03607FEB282EA1030074F390 /* UserSetting */,
@@ -155,6 +168,7 @@
 				03FBC73A282D1D4600F7FB22 /* FirebaseAuth */,
 				03FBC73C282D1D4600F7FB22 /* FirebaseFirestore */,
 				03FBC73E282D1D4600F7FB22 /* FirebaseFirestoreSwift */,
+				032ED3472850D523007A6AFC /* FirebaseStorage */,
 			);
 			productName = kittyPainter;
 			productReference = 03FBC726282D1BED00F7FB22 /* Kitty Painter.app */;
@@ -224,6 +238,7 @@
 				03607FEA282E77200074F390 /* UserSettingView.swift in Sources */,
 				03FBC72A282D1BED00F7FB22 /* kittyPainterApp.swift in Sources */,
 				03607FED282EA1240074F390 /* HeadshotView.swift in Sources */,
+				03D0A031284F512E006CBE7D /* View+Extension.swift in Sources */,
 				03FBC746282D1FDD00F7FB22 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +453,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		032ED3472850D523007A6AFC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03FBC739282D1D4600F7FB22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		03FBC73A282D1D4600F7FB22 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03FBC739282D1D4600F7FB22 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

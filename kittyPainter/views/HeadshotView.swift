@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HeadshotView: View {
+    @EnvironmentObject var auth: UserViewModel
     let userDetail: UserDetail
     let size: CGFloat
     
@@ -19,7 +20,7 @@ struct HeadshotView: View {
     }
 
     var body: some View {
-        if userDetail.uid != "" {
+        if userDetail.uid == auth.user.uid {
             Image(userDetail.headshot.baseString)
                 .resizable()
                 .scaledToFit()
