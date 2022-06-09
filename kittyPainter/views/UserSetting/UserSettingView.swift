@@ -31,12 +31,43 @@ struct UserSettingView: View {
                 .frame(width: 200, height: 200)
                 
                 List {
-                    Group {
-                        TextField(text: $userDetail.name, prompt: Text(userDetail.name)) {}
-                            .modifier(TextFieldViewModifier(image: "person.circle.fill"))
-                        HeadshotSettingView(headshot: $userDetail.headshot)
+                    Section {
+                        Group {
+                            TextField(text: $userDetail.name, prompt: Text(userDetail.name)) {}
+                                .modifier(TextFieldViewModifier(image: "person.circle.fill"))
+                            HeadshotSettingView(headshot: $userDetail.headshot)
+                        }
+                        .padding(.vertical, 5)
+                    } header: {
+                        Label("Modifiable Information", systemImage: "pencil.and.outline")
+                            .font(.caption)
                     }
-                    .padding(.vertical, 5)
+                    Section {
+                        Group {
+                            FixedInformation(title: "Email", content: auth.user.email)
+                            FixedInformation(title: "Joined Time", content: auth.user.detail.joinTime.formatted(.dateTime))
+                            FixedInformation(title: "Accuracy Rate", content: "\(auth.user.detail.accuracyRate)%")
+                            HStack {
+                                Text("Hints")
+                                Spacer()
+                                ForEach(0..<UserDetail.maxHints) { idx in
+                                    Image(systemName: "lightbulb.fill")
+                                        .foregroundColor((idx < auth.user.detail.hints) ? .yellow : .secondary)
+                                }
+                                Image(systemName: "play.rectangle")
+                                    .foregroundColor(.blue)
+                                    .padding(.leading, 5)
+                                    .onTapGesture {
+                                        print("Ad")
+                                    }
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    } header: {
+                        Label("Fixed Information", systemImage: "info.circle")
+                            .font(.caption)
+                    }
+
                 }
             }
         }
@@ -52,5 +83,18 @@ struct UserSettingView: View {
 struct UserSettingView_Previews: PreviewProvider {
     static var previews: some View {
         UserSettingView(userDetail: .constant(UserDetail()))
+    }
+}
+
+struct FixedInformation: View {
+    let title: String
+    let content: String
+
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(content)
+        }
     }
 }

@@ -43,10 +43,10 @@ struct Headshot: Codable {
     }
     var eyesOffset: CGSize {
         if self.shape == 2 {
-            return CGSize(width: 1 + extraEyesOffset.width, height: 0 + extraEyesOffset.height)
+            return CGSize(width: 1 + extraEyesOffset.width, height: 0 - extraEyesOffset.height)
         }
         else {
-            return extraEyesOffset
+            return CGSize(width: extraEyesOffset.width, height: -extraEyesOffset.height)
         }
     }
     
@@ -58,7 +58,7 @@ struct Headshot: Codable {
                 Image(self.eyesString)
                     .resizable()
                     .scaledToFit()
-                    .offset(eyesOffset)
+                    .offset(x: eyesOffset.width * 3, y: eyesOffset.height * 3)
             }
             .scaleEffect(0.8)
             .background(self.backgroundColor)
@@ -71,7 +71,7 @@ struct Headshot: Codable {
         let image = self.getUIImage()
 
         let fileReference = Storage.storage().reference().child(uid + ".png")
-        if let data = image.jpegData(compressionQuality: 0.9) {
+        if let data = image.pngData() {
             
             fileReference.putData(data, metadata: nil) { result in
                 switch result {

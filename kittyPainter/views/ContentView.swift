@@ -21,7 +21,9 @@ struct ContentView: View {
         }
         .environmentObject(auth)
         .alert("Auth Error", isPresented: $auth.toAlert) {
-            Button("OK") {}
+            Button("OK") {
+                auth.isLoading = false
+            }
         } message: {
             Text(auth.errorMessage)
         }

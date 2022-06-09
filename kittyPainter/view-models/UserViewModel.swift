@@ -9,13 +9,16 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseStorage
 
 class UserViewModel: ObservableObject {
     @Published var user: User = User()
-    @Published var isLoading: Bool = false
     @Published var isLoggedIn: Bool = false
     @Published var toAlert: Bool = false
     @Published var errorMessage: String = ""
+
+    @Published var isLoading: Bool = false
+    @Published var isSaving: Bool = false
 
     init() {
         self.checkIsLoggedIn()
@@ -42,7 +45,9 @@ class UserViewModel: ObservableObject {
             self.user.uid = user.uid
             self.user.detail = UserDetail(uid: user.uid)
             self.updateUserDetail()
-            self.logIn()
+            self.uploadHeadshot() {
+                self.logIn()
+            }
         }
     }
 
@@ -59,6 +64,7 @@ class UserViewModel: ObservableObject {
             self.isLoggedIn = true
             self.user.uid = user.uid
             print(user.email ?? "user email", user.uid)
+            self.setHeadshotImage()
             self.readUserDetail()
             self.isLoading = false
         }
@@ -79,6 +85,7 @@ class UserViewModel: ObservableObject {
             self.user.uid = user.uid
             self.user.email = user.email ?? ""
             self.isLoggedIn = true
+            self.setHeadshotImage()
             self.readUserDetail()
         } else {
             self.isLoggedIn = false
@@ -105,6 +112,32 @@ class UserViewModel: ObservableObject {
                 return
             }
             self.user.detail = userDetail
+        }
+    }
+    
+    func uploadHeadshot(completion: () -> Void) {
+        self.user.detail.headshot.uploadPhoto(uid: self.user.uid) { result in
+            switch(result) {
+            case .success(let url):
+                self.user.detail.photoURL = url
+                self.setHeadshotImage()
+            case .failure(let error):
+                print(error)
+            }
+        }
+        completion()
+    }
+    
+    func setHeadshotImage() {
+        let fileReference = Storage.storage().reference().child(self.user.uid + ".png")
+        fileReference.getData(maxSize: 10 * 1024 * 1024) { result in
+            switch result {
+            case .success(let data):
+                self.user.headshotImage = UIImage(data: data)
+            case .failure(let error):
+                print(error)
+            }
+            self.isSaving = false
         }
     }
 }

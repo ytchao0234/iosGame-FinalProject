@@ -26,20 +26,23 @@ struct UserMenuBar: View {
 
             switch(mainView) {
             case .UserSetting:
-                Button("Save") {
+                Button {
+                    auth.isSaving = true
                     auth.user.detail = userDetail
-                    auth.user.detail.headshot.uploadPhoto(uid: auth.user.uid) { result in
-                        switch(result) {
-                        case .success(let url):
-                            auth.user.detail.photoURL = url
-                        case .failure(let error):
-                            print(error)
-                        }
+                    auth.uploadHeadshot() {
                         auth.updateUserDetail()
+                    }
+                } label: {
+                    if !auth.isSaving {
+                        Text("Save")
+                    }
+                    else {
+                        ProgressView()
                     }
                 }
                 .modifier(ButtonViewModifier(shape: RoundedRectangle(cornerRadius: 5), background: .green, toStroke: true))
                 .transition(.offset(x: 50).combined(with: .opacity))
+                .disabled(auth.isSaving)
             default:
                 EmptyView()
             }
@@ -48,10 +51,26 @@ struct UserMenuBar: View {
                 auth.logOut()
             }
             .modifier(ButtonViewModifier(shape: RoundedRectangle(cornerRadius: 5), background: .blue, toStroke: false))
-            HeadshotView(userDetail: auth.user.detail, size: 50)
-                .onTapGesture {
-                    mainView = .UserSetting
+            
+            Group {
+                if let headshot = auth.user.headshotImage {
+                    Image(uiImage: headshot)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                } else {
+                    ProgressView()
+                        .frame(width: 45, height: 45)
+                        .background(Color.secondary)
+                        .clipShape(Circle())
                 }
+            }
+            .onTapGesture {
+                mainView = .UserSetting
+            }
+            .onChange(of: auth.user.headshotImage) { newValue in
+                print(newValue)
+            }
         }
         .animation(.easeOut(duration: 0.5), value: mainView)
         .frame(height: 50)
